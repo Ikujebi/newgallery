@@ -50,33 +50,40 @@ const Signin = ({setIsAuthenticated}) => {
 
 
   const loginHandler = () => {
-    if (signInInfo.email === 'user@example.com' && signInInfo.password === '1Password') {
-      localStorage.setItem('isAuthenticated', 'true');
-      setIsAuthenticated(true);
-      alert('Login successful');
-      navigate('/gallery');
+    // First, validate the form
+    if (validateForm()) {
+      // If the form is valid, proceed with login
+      if (signInInfo.email === 'user@example.com' && signInInfo.password === '1Password') {
+        sessionStorage.setItem('isAuthenticated', 'true');
+        setIsAuthenticated(true);
+        alert('Login successful');
+        navigate('/gallery');
+      } else {
+        setError('Invalid username or password');
+      }
     } else {
-      setError('Invalid username or password');
+      // If the form is not valid, do not attempt login and show validation errors
+      setError('Please fill out the required fields.');
     }
   };
   
-  // When the user logs out, set isAuthenticated to false and remove it from localStorage
+  // When the user logs out, set isAuthenticated to false and remove it from sessionStorage
   const logoutHandler = () => {
-    localStorage.removeItem('isAuthenticated');
+    sessionStorage.removeItem('isAuthenticated');
     setIsAuthenticated(false);
     // Perform any additional logout logic
   };
   
-  // In your component's initialization code (e.g., useEffect), check localStorage to restore isAuthenticated
+  // In your component's initialization code (e.g., useEffect), check sessionStorage to restore isAuthenticated
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
     setIsAuthenticated(isAuthenticated);
   }, []);
   
 
   return (
-    <div className=" grid-cols-2  h-[100svh]">
-      <div className="w-[10rem] mx-[2rem] rounded-[50%]">
+    <div className=" grid-cols-2  h-[100svh] ">
+      <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2">
         <img className=" rounded-[5rem]" src={ayanfe} alt="ayanfe" />
       </div>
 
@@ -85,7 +92,7 @@ const Signin = ({setIsAuthenticated}) => {
           <h1>Sign In</h1>
         </div>
         <div className="block justify-center items-center flex-col  h-80 mt-10 ">
-          <div className="ml-[1.4rem]">
+          <div className="ml-[1.4rem] xl:w-full lg:w-full md:w-full w-[20.7rem] mx-auto">
           <Form
               layout="vertical"
               onFinish={loginHandler}
