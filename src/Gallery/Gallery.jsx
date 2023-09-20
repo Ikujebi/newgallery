@@ -3,6 +3,7 @@ import { Row, Col, Input } from "antd";
 import ImageList from "./Images";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 const Gallery = ({ images }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,7 +44,7 @@ const Gallery = ({ images }) => {
         </Col>
       </Row>
       <div>
-        <DndProvider onDragEnd={onDragEnd} backend={HTML5Backend}>
+        <DndProvider onDragEnd={onDragEnd} backend={TouchBackend} options={{ enableMouseEvents: true }}>
           <ImageList images={filteredImages} />
         </DndProvider>
       </div>
