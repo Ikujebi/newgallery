@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Row, Col, Input } from "antd";
 import ImageList from "./Images";
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
 
 const Gallery = ({ images }) => {
