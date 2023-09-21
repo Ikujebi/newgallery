@@ -62,7 +62,7 @@ function App() {
       <Route path='/' element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
       <Route path='/create' element={<Create  />} />
       <Route path='/gallery' element={
-          <ProtectedRoutes><Gallery  images={images}/></ProtectedRoutes>
+          <ProtectedRoutes><Gallery setIsAuthenticated={setIsAuthenticated}  images={images}/></ProtectedRoutes>
           } />
       <Route path='/imagelist' element={
           <ProtectedRoutes><ImageList images={images}/></ProtectedRoutes>

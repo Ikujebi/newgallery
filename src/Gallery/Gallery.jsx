@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from "react";
-import { Row, Col, Input } from "antd";
+import { Row, Col, Input,Button } from "antd";
 import ImageList from "./Images";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
+import {  useNavigate } from "react-router-dom";
 
-const Gallery = ({ images }) => {
+const Gallery = ({ images, setIsAuthenticated }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  
+  const navigate = useNavigate()
   const [filteredImages, setFilteredImages] = useState(images); // Initialize with the images prop
 
   
@@ -34,6 +35,13 @@ const Gallery = ({ images }) => {
     setFilteredImages(newFilteredImages);
   };
 
+  const logoutHandler = () => {
+    sessionStorage.removeItem('isAuthenticated');
+    setIsAuthenticated(false);
+    navigate("/")
+
+  };
+
   return (
     <div className="container mx-auto mt-4 p-4 lato">
       <Row gutter={[16, 16]}>
@@ -46,6 +54,10 @@ const Gallery = ({ images }) => {
             onChange={handleSearchInputChange}
             className="w-full"
           />
+
+        </Col>
+        <Col>
+        <Button onClick={logoutHandler} type="danger" className=" bg-red-600 text-white">sign out</Button>
         </Col>
       </Row>
       <div>

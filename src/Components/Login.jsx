@@ -70,11 +70,7 @@ const Signin = ({setIsAuthenticated}) => {
   };
   
   // When the user logs out, set isAuthenticated to false and remove it from sessionStorage
-  const logoutHandler = () => {
-    sessionStorage.removeItem('isAuthenticated');
-    setIsAuthenticated(false);
-    // Perform any additional logout logic
-  };
+ 
   
   // In your component's initialization code (e.g., useEffect), check sessionStorage to restore isAuthenticated
   useEffect(() => {
