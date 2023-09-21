@@ -158,7 +158,7 @@ const Signin = ({setIsAuthenticated}) => {
                     type="primary"
                     htmlType="submit"
                     style={{ background: "grey", borderColor: "grey" }}
-                    className="bg-gray-200 text-gray-700 !hover-bg-gray-400 flex items-center justify-center py-5"
+                    className="bg-gray-200 text-white hover:!bg-bl-400 flex items-center justify-center py-5"
                     block
                     
                   >

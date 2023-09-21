@@ -88,17 +88,18 @@ const Create = ({setIsAuthenticated}) => {
   
 
   return (
-    <div className=" grid-cols-2  h-[100svh] home">
-      <div className="w-[10rem] mx-[2rem] rounded-[50%]">
-        <img className=" rounded-[5rem]" src={ayanfe} alt="ayanfe" />
+    <div className="  h-[100svh] home ">
+       <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2 flex  gap-5">
+        <img className=" rounded-[5rem] w-[6rem]" src={ayanfe} alt="ayanfe" />
+        <h1 className=" flex font-bold text-gray-700  m-auto">DRAG n DROP</h1>
       </div>
 
-      <div className="  justify-center m-auto my-[4rem] items-center bg-white w-[25rem]">
+      <div className="  mx-auto  mb-[4rem] items-center bg-white md:w-[28rem] xl:w-[33rem] lg:w-[33rem] w-[25rem]">
         <div className="text-center mt-[10rem]  text-2xl font-bold">
           <h1>Create An Account</h1>
         </div>
-        <div className="block justify-center items-center flex-col  h-80 mt-10 ">
-          <div className="ml-[1.4rem]">
+        <div className=" ml-[1.43rem] h-80 mt-10 ">
+          <div className=" xl:w-full lg:w-full md:w-full w-[20.7rem] ">
           <Form
               layout="vertical"
               onFinish={createUser}
@@ -160,13 +161,14 @@ const Create = ({setIsAuthenticated}) => {
                     loading={loading}
                     type="primary"
                     htmlType="submit"
-                    className="bg-[#134c98] flex items-center justify-center py-5"
+                    style={{ background: "grey", borderColor: "grey" }}
+                    className="bg-gray-200 text-white  flex items-center justify-center py-5"
                     block
                   >
                     Sign Up
                   </Button>
                 </Col>
-                <Link to={'/'} className="text-sm font-normal mb-2 pl-[1rem] text-[#75C2F6]">
+                <Link to={'/'} className="text-sm font-normal mb-2 pl-[1rem]  text-gray-700 ">
                   <h6>LogIn</h6>
                 </Link>
               </Row>
