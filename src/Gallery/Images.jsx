@@ -80,7 +80,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
       <img
         src={image.src}
         alt={image.tag}
-        className="w-full xl:h-64 rounded-md h-24 lg:h-48 md:h-32"
+        className="md:w-[11rem] lg:w-[15rem] lx:w-[17rem] w-[5rem] xl:h-64 rounded-md h-24 lg:h-48 md:h-32"
       />
       <div className="flex justify-center">
         <button className="bg-gray-200 text-gray-700 mt-2 mx-auto p-2 xl:text-lg text-sm md:text-lg lg:text-lg rounded-md">
