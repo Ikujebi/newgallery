@@ -3,7 +3,8 @@ import {  useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import ayanfe from '../assets/images/ayanfe.png'
-import { auth } from '../firebase';
+import { auth } from '../firebase.js'
+import {  createUserWithEmailAndPassword } from "firebase/auth";
 
 
 const Create = ({setIsAuthenticated}) => {
@@ -14,7 +15,7 @@ const Create = ({setIsAuthenticated}) => {
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState('');
+  
 
   const [signInInfo, setsignInInfo] = useState({
     email: '',
@@ -33,9 +34,9 @@ const Create = ({setIsAuthenticated}) => {
       ...prevData,
       [name]: value,
     }));
+    console.log(`Name: ${name}, Value: ${value}`);
   };
 
-  
   const validateForm = () => {
     let newErrors = {};
 
@@ -63,7 +64,7 @@ const Create = ({setIsAuthenticated}) => {
         setLoading(true);
 
         // Create a new user with Firebase Authentication
-        await auth.createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
 
         // User creation successful
         alert('User created successfully');
@@ -71,7 +72,9 @@ const Create = ({setIsAuthenticated}) => {
         navigate('/gallery'); // Redirect to the protected route
       }
     } catch (error) {
-      // Handle any errors that occur during user creation
+      console.error("Firebase Authentication Error:", error);
+
+      // Handle specific Firebase Authentication error codes as needed
       if (error.code === 'auth/email-already-in-use') {
         setErrors({ email: 'Email address is already in use.' });
       } else if (error.code === 'auth/invalid-email') {
@@ -117,6 +120,9 @@ const Create = ({setIsAuthenticated}) => {
               <Row>
                 <Col span={24}>
                   <Form.Item
+                  name="email"
+                  validateStatus={errors.email ? 'error' : ''}
+                    help={errors.email}
                     rules={[
                       {
                         required: true,
@@ -138,6 +144,9 @@ const Create = ({setIsAuthenticated}) => {
 
                 <Col span={24}>
                   <Form.Item
+                  name="password"
+                  validateStatus={errors.email ? 'error' : ''}
+                  help={errors.email}
                     rules={[
                       {
                         required: true,
@@ -152,6 +161,7 @@ const Create = ({setIsAuthenticated}) => {
                       type="password"
                       id="password"
                       className="py-3"
+                      required
                     />
                   </Form.Item>
                 </Col>
