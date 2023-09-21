@@ -1,7 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+import {initializeApp  as initializeAdminApp} from "firebase-admin/app"
+import {getAuth  as getAdminAuth, createCustomToken} from "firebase-admin/auth"
+
+const adminApp = initializeAdminApp()
+const adminAuth = getAdminAuth()
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKJHyi-9acTIUtvcqiXoyWSyj5DVXa3wk",
@@ -18,8 +24,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+
 // Get the authentication (auth) object
-const auth = getAuth(app);
+const auth = getAuth(firebaseApp);
 
 export { auth };
+export {}
 
