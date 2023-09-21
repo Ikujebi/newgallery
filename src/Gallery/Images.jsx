@@ -38,7 +38,7 @@ const Images = ({ images }) => {
   };
 
   return (
-    <div className="flex flex-wrap p-4">
+    <div className="flex flex-wrap p-4 poppings">
       {imageList.map((image, index) => (
         <div key={image.id} className="bg-white p-4 rounded-md shadow-md m-2">
           {/* Use useDrag hook to make the image draggable */}

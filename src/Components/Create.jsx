@@ -88,7 +88,7 @@ const Create = ({setIsAuthenticated}) => {
   
 
   return (
-    <div className=" grid-cols-2  h-[100svh]">
+    <div className=" grid-cols-2  h-[100svh] home">
       <div className="w-[10rem] mx-[2rem] rounded-[50%]">
         <img className=" rounded-[5rem]" src={ayanfe} alt="ayanfe" />
       </div>

@@ -35,7 +35,7 @@ const Gallery = ({ images }) => {
   };
 
   return (
-    <div className="container mx-auto mt-4 p-4">
+    <div className="container mx-auto mt-4 p-4 lato">
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <h1 className="text-2xl font-semibold mb-4">Image Gallery</h1>

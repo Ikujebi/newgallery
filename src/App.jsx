@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate  } from 'react-router-dom';
 import '../src/index.css';
+import '../src/App.css';
 import Login from './Components/Login'
 import Create from './Components/Create'
 import Gallery from './Gallery/Gallery'

@@ -84,7 +84,7 @@ const Signin = ({setIsAuthenticated}) => {
   
 
   return (
-    <div className=" grid-cols-2  h-[100svh] ">
+    <div className=" grid-cols-2  h-[100svh] home">
       <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2 flex  gap-5">
         <img className=" rounded-[5rem] w-[6rem]" src={ayanfe} alt="ayanfe" />
         <h1 className=" flex font-bold text-gray-700  m-auto">DRAG n DROP</h1>
