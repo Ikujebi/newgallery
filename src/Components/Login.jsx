@@ -50,15 +50,17 @@ const Signin = ({setIsAuthenticated}) => {
 
 
   const loginHandler = () => {
-    // First, validate the form
+    
     if (validateForm()) {
+      setLoading(true);
       // If the form is valid, proceed with login
       if (signInInfo.email === 'user@example.com' && signInInfo.password === '1Password') {
         sessionStorage.setItem('isAuthenticated', 'true');
         setIsAuthenticated(true);
-        alert('Login successful');
+        
         navigate('/gallery');
       } else {
+        alert('Invalid username or password')
         setError('Invalid username or password');
       }
     } else {
@@ -83,8 +85,9 @@ const Signin = ({setIsAuthenticated}) => {
 
   return (
     <div className=" grid-cols-2  h-[100svh] ">
-      <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2">
-        <img className=" rounded-[5rem]" src={ayanfe} alt="ayanfe" />
+      <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2 flex  gap-5">
+        <img className=" rounded-[5rem] w-[6rem]" src={ayanfe} alt="ayanfe" />
+        <h1 className=" flex font-bold text-gray-700  m-auto">DRAG n DROP</h1>
       </div>
 
       <div className="  justify-center m-auto my-[4rem] items-center bg-white w-[25rem]">
@@ -123,7 +126,7 @@ const Signin = ({setIsAuthenticated}) => {
                       type="email"
                       id="email"
                       placeholder="Email Address"
-                      className="py-3"
+                      className="py-3 text-grey-700"
                       
                     />
                   </Form.Item>
@@ -144,7 +147,7 @@ const Signin = ({setIsAuthenticated}) => {
                       placeholder="Password"
                       type="password"
                       id="password"
-                      className="py-3"
+                      className="py-3 text-grey-700"
                     />
                   </Form.Item>
                 </Col>
@@ -154,8 +157,10 @@ const Signin = ({setIsAuthenticated}) => {
                     loading={loading}
                     type="primary"
                     htmlType="submit"
-                    className="bg-gray-200 text-gray-700 flex items-center justify-center py-5"
+                    style={{ background: "grey", borderColor: "grey" }}
+                    className="bg-gray-200 text-gray-700 !hover-bg-gray-400 flex items-center justify-center py-5"
                     block
+                    
                   >
                     Sign In
                   </Button>

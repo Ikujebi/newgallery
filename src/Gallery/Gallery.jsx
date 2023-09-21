@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Row, Col, Input } from "antd";
 import ImageList from "./Images";
 import { DndProvider } from "react-dnd";
@@ -6,15 +6,21 @@ import { TouchBackend } from "react-dnd-touch-backend";
 
 const Gallery = ({ images }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredImages, setFilteredImages] = useState(images);
+  
+  const [filteredImages, setFilteredImages] = useState(images); // Initialize with the images prop
 
+  
   const handleSearchInputChange = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = images.filter((image) => image.tag.toLowerCase().includes(term));
-    setFilteredImages(filtered);
+    setSearchTerm(e.target.value);
   };
 
+  useEffect(() => {
+    // Update filteredImages whenever images or searchTerm changes
+    const newFilteredImages = images.filter((image) =>
+      image.tag.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredImages(newFilteredImages);
+  }, [images, searchTerm]);
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;

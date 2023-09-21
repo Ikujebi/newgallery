@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
 
-const ImageList = ({ images }) => {
+const Images = ({ images }) => {
+  console.log("Received images:", images);
   const [imageList, setImageList] = useState(images);
+  console.log("imageList images:", imageList);
+
+  useEffect(() => {
+    setImageList(images);
+  }, [images]);
 
   const moveImage = (fromIndex, toIndex) => {
     // Ensure that fromIndex and toIndex are within bounds
@@ -15,15 +21,18 @@ const ImageList = ({ images }) => {
     ) {
       return;
     }
-
-    // Reorder the images array using immutability-helper
+    
+    
     const updatedImageList = update(imageList, {
+      
       $splice: [
         [fromIndex, 1], // Remove the item at fromIndex
         [toIndex, 0, imageList[fromIndex]], // Insert the item at fromIndex to toIndex
       ],
+      
     });
-
+    console.log("updatedImageList images:", updatedImageList);
+    console.log(`updatedImageList = ${JSON.stringify(updatedImageList)}`);
     // Update the state with the new ordered imageList
     setImageList(updatedImageList);
   };
@@ -82,4 +91,4 @@ const DraggableImage = ({ image, index, moveImage }) => {
   );
 };
 
-export default ImageList;
+export default Images;

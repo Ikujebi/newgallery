@@ -27,7 +27,7 @@ import zebra from "./assets/images/zebra.png";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true'
   );
-
+  
   const ProtectedRoutes = ({children}) =>{
     
     
@@ -61,7 +61,7 @@ function App() {
       <Route path='/' element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
       <Route path='/create' element={<Create  />} />
       <Route path='/gallery' element={
-          <ProtectedRoutes><Gallery images={images}/></ProtectedRoutes>
+          <ProtectedRoutes><Gallery  images={images}/></ProtectedRoutes>
           } />
       <Route path='/imagelist' element={
           <ProtectedRoutes><ImageList images={images}/></ProtectedRoutes>
