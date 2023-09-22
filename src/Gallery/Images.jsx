@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
-import { motion } from "framer-motion";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, config , motion } from "react-spring";
 
 const Images = ({ images }) => {
   console.log("Received images:", images);
@@ -73,7 +72,8 @@ const DraggableImage = ({ image, index, moveImage }) => {
     },
   });
   const springProps = useSpring({
-    scale: isDragging ? 1.1 : 1, // Define your spring animation here
+    transform: `translate3d(0, ${isDragging ? -10 : 0}px, 0)`, // Use translate3d for smoother vertical movement
+    config: { tension: 500, friction: 30 },
   });
 
   return (
