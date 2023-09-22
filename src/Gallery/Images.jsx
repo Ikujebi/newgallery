@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
-import { motion } from "framer-motion";
+
 import { useSpring, animated } from "react-spring";
 
 const Images = ({ images }) => {
@@ -62,7 +62,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
   });
   const springProps = useSpring({
     opacity: isDragging ? 0.7 : 1,
-    transform: `translate3d(0, ${isDragging ? -10 : 0}px, 0)`,
+    transform: `translate3d(${isDragging ? 5 : 4}px, ${isDragging ? -5 : 0}px, 0)`,
     config: {
       tension: isDragging ? 800 : 500, 
       friction: isDragging ? 40 : 30,  
@@ -71,14 +71,13 @@ const DraggableImage = ({ image, index, moveImage }) => {
   });
 
   return (
-    <motion.div
+    <animated.div
+    style={springProps} 
       ref={(node) => {
         ref(node);
         drop(node);
       }}
       className={`cursor-move ${isDragging ? "dragging" : ""}`}
-      whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)" }}
-      whileTap={{ scale: 0.95 }}
     >
       <img
         src={image.src}
@@ -90,7 +89,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </motion.div>
+    </animated.div>
   );
 };
 
