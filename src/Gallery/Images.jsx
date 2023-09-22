@@ -1,13 +1,11 @@
-import React, { useState,useEffect } from "react";
-import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
+import React, { useState, useEffect } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import update from "immutability-helper";
-
-import { useSpring, animated } from "react-spring";
+import {  useSpring, config } from "react-spring";
+import { motion } from "framer-motion";
 
 const Images = ({ images }) => {
-  console.log("Received images:", images);
   const [imageList, setImageList] = useState(images);
-  console.log("imageList images:", imageList);
 
   useEffect(() => {
     setImageList(images);
@@ -16,28 +14,29 @@ const Images = ({ images }) => {
   const moveImage = (dragIndex, hoverIndex) => {
     const draggedImage = imageList[dragIndex];
 
-    // Use immutability-helper to update the imageList state
     const updatedImageList = update(imageList, {
       $splice: [
-        [dragIndex, 1], // Remove the dragged image from the original position
-        [hoverIndex, 0, draggedImage], // Insert the dragged image at the new position
+        [dragIndex, 1],
+        [hoverIndex, 0, draggedImage],
       ],
     });
 
     setImageList(updatedImageList);
   };
-
-  
+  const onDrop = (draggedIndex, droppedIndex) => {
+    
+    moveImage(draggedIndex, droppedIndex);
+  };
 
   return (
     <div className="flex flex-wrap p-4 poppings">
       {imageList.map((image, index) => (
         <div key={image.id} className="bg-white p-4 rounded-md shadow-md m-2">
-          {/* Use useDrag hook to make the image draggable */}
           <DraggableImage
             image={image}
             index={index}
             moveImage={moveImage}
+            onDrop={onDrop}
           />
         </div>
       ))}
@@ -46,7 +45,7 @@ const Images = ({ images }) => {
 };
 
 const DraggableImage = ({ image, index, moveImage }) => {
-  const [{ isDragging }, ref, preview] = useDrag({
+  const [{ isDragging }, ref] = useDrag({
     type: "IMAGE",
     item: { id: image.id, index },
   });
@@ -60,24 +59,26 @@ const DraggableImage = ({ image, index, moveImage }) => {
       }
     },
   });
+
   const springProps = useSpring({
     opacity: isDragging ? 0.7 : 1,
-    transform: `translate3d(${isDragging ? 5 : 4}px, ${isDragging ? -5 : 0}px, 0)`,
-    config: {
-      tension: isDragging ? 800 : 500, 
-      friction: isDragging ? 40 : 30,  
-      duration: isDragging ? 0 : 300, 
-    },
+    transform: `translate3d(${isDragging ? 5 : 0}px, ${isDragging ? -5 : 0}px, 0) scale(${
+      isDragging ? 1.05 : 1
+    })`,
+    boxShadow: isDragging
+      ? "0px 8px 12px rgba(0, 0, 0, 0.2)"
+      : "0px 4px 6px rgba(0, 0, 0, 0.1)",
+   
   });
 
   return (
-    <animated.div
-    style={springProps} 
+    <motion.div
       ref={(node) => {
         ref(node);
         drop(node);
       }}
-      className={`cursor-move ${isDragging ? "dragging" : ""}`}
+      className={`cursor-move`}
+      
     >
       <img
         src={image.src}
@@ -89,7 +90,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </animated.div>
+    </motion.div>
   );
 };
 

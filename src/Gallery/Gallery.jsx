@@ -22,9 +22,13 @@ const Gallery = ({ images, setIsAuthenticated }) => {
     setFilteredImages(newImages);
   };
 
+ 
+
   const onDragEnd = (result) => {
+    console.log(result);
     if (!result.destination) {
       return;
+      
     }
 
     const newFilteredImages = [...filteredImages];
