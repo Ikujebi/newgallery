@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
+import { motion } from "framer-motion";
 import { useSpring, animated } from "react-spring";
 
 const Images = ({ images }) => {
@@ -12,31 +13,20 @@ const Images = ({ images }) => {
     setImageList(images);
   }, [images]);
 
-  const moveImage = (fromIndex, toIndex) => {
-    // Ensure that fromIndex and toIndex are within bounds
-    if (fromIndex < 0 || fromIndex >= imageList.length || toIndex < 0 || toIndex >= imageList.length) {
-      return;
-    }
-  
-    // Check if fromIndex is the same as toIndex
-    if (fromIndex === toIndex) {
-      return;
-    }
-  
-    const startIndex = Math.min(Math.max(fromIndex, 0), imageList.length - 1);
-    const endIndex = Math.min(Math.max(toIndex, 0), imageList.length - 1);
-  
-    // Perform the image reordering
-    const draggedImage = imageList[startIndex];
+  const moveImage = (dragIndex, hoverIndex) => {
+    const draggedImage = imageList[dragIndex];
+
+    // Use immutability-helper to update the imageList state
     const updatedImageList = update(imageList, {
       $splice: [
-        [startIndex, 1], 
-        [endIndex, 0, draggedImage], 
+        [dragIndex, 1], // Remove the dragged image from the original position
+        [hoverIndex, 0, draggedImage], // Insert the dragged image at the new position
       ],
     });
-  
+
     setImageList(updatedImageList);
   };
+
   
 
   return (
@@ -81,13 +71,14 @@ const DraggableImage = ({ image, index, moveImage }) => {
   });
 
   return (
-    <animated.div
-    style={springProps} 
+    <motion.div
       ref={(node) => {
         ref(node);
         drop(node);
       }}
       className={`cursor-move ${isDragging ? "dragging" : ""}`}
+      whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)" }}
+      whileTap={{ scale: 0.95 }}
     >
       <img
         src={image.src}
@@ -99,7 +90,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </animated.div>
+    </motion.div>
   );
 };
 
