@@ -3,11 +3,11 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-/* import {initializeApp  as initializeAdminApp} from "firebase-admin/app"
+import {initializeApp  as initializeAdminApp} from "firebase-admin/app"
 import {getAuth  as getAdminAuth, createCustomToken} from "firebase-admin/auth"
 
 const adminApp = initializeAdminApp()
-const adminAuth = getAdminAuth() */
+const adminAuth = getAdminAuth()
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKJHyi-9acTIUtvcqiXoyWSyj5DVXa3wk",
