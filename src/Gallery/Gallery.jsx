@@ -17,13 +17,10 @@ const Gallery = ({ images, setIsAuthenticated }) => {
     setSearchTerm(e.target.value);
   };
 
-  useEffect(() => {
-    // Update filteredImages whenever images or searchTerm changes
-    const newFilteredImages = images.filter((image) =>
-      image.tag.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredImages(newFilteredImages);
-  }, [images, searchTerm]);
+  const updateFilteredImages = (newImages) => {
+    setFilteredImages(newImages);
+  };
+
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -34,17 +31,24 @@ const Gallery = ({ images, setIsAuthenticated }) => {
     newFilteredImages.splice(result.destination.index, 0, movedImage);
 
     // Update the filtered images after dragging and dropping
-    setFilteredImages(newFilteredImages);
+    updateFilteredImages(newFilteredImages);
   };
 
-  
   const openLogOutModal = () => {
     setIsLogOutModalOpen(true);
   };
+
   const logoutHandler = () => {
     openLogOutModal();
-
   };
+
+  useEffect(() => {
+    // Update filteredImages whenever images or searchTerm changes
+    const newFilteredImages = images.filter((image) =>
+      image.tag.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    updateFilteredImages(newFilteredImages);
+  }, [images, searchTerm]);
   
 
   return (

@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
 import { motion } from "framer-motion";
+import { useSpring, animated } from "react-spring";
 
 const Images = ({ images }) => {
   console.log("Received images:", images);
@@ -71,10 +72,13 @@ const DraggableImage = ({ image, index, moveImage }) => {
       }
     },
   });
+  const springProps = useSpring({
+    scale: isDragging ? 1.1 : 1, // Define your spring animation here
+  });
 
   return (
-    <motion.div
-      whileDrag={{ scale: 1.1 }}
+    <animated.div
+    style={springProps} 
       ref={(node) => {
         ref(node);
         drop(node);
@@ -91,7 +95,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </motion.div>
+    </animated.div>
   );
 };
 
