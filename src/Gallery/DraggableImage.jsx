@@ -1,6 +1,7 @@
 
 import { useDrag, useDrop  } from "react-dnd";
 import { motion } from "framer-motion";
+import {  useSpring, config } from "react-spring";
 
 const DraggableImage = ({ image, index, moveImage }) => {
   const [{ isDragging }, ref] = useDrag({
@@ -38,7 +39,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
   };
 
   return (
-    <motion.div
+    <animate.div
     ref={(node) => {
         ref(node);
         drop(node);
@@ -48,6 +49,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
+      style={springProps}
       
     >
       <img
@@ -60,7 +62,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </motion.div>
+    </animate.div>
   );
 };
 

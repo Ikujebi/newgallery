@@ -72,7 +72,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
   });
 
   return (
-    <motion.div
+    <animate.div
       ref={(node) => {
         ref(node);
         drop(node);
@@ -90,7 +90,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </motion.div>
+    </animate.div>
   );
 };
 
