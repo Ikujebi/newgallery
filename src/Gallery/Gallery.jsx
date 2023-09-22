@@ -5,6 +5,7 @@ import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
 import {  useNavigate } from "react-router-dom";
 import LogOutModal from "../Components/LogOutModal";
+import rec from '../assets/images/Rectangle.png'
 
 const Gallery = ({ images, setIsAuthenticated }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,16 +53,17 @@ const Gallery = ({ images, setIsAuthenticated }) => {
   
 
   return (
-    <div className="container mx-auto mt-4 p-4 lato">
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <h1 className="text-2xl font-semibold mb-4">Image Gallery</h1>
+    <div className="container mx-auto mt-2 p-4 lato">
+      <Row gutter={[16, 16]} className=" flex gap-[.01rem]">
+        <Col span={12} className="flex ">
+          <img src={rec} alt="logo"  className=" w-5rem "/>
+          <h1 className="  font-semibold md:mt-5 lg:mt-5 xl:mt-5 mt-4 md:text-[1.6rem] text-gray-600 lg:text-[1.6rem] xl:text-[1.6rem] text-[1rem]">Image Gallery</h1>
         </Col>
-        <Col span={12}>
+        <Col span={12} className="   ">
           <Input
             placeholder="Search images by tag"
             onChange={handleSearchInputChange}
-            className="w-full"
+            className="md:w-full lg:w-full xl:w-full w-[9rem] "
           />
 
         </Col>

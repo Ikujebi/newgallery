@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
-import { useSpring, animated, config , motion } from "react-spring";
+import { useSpring, animated } from "react-spring";
 
 const Images = ({ images }) => {
   console.log("Received images:", images);
@@ -14,31 +14,30 @@ const Images = ({ images }) => {
 
   const moveImage = (fromIndex, toIndex) => {
     // Ensure that fromIndex and toIndex are within bounds
-    if (
-      fromIndex < 0 ||
-      fromIndex >= imageList.length ||
-      toIndex < 0 ||
-      toIndex >= imageList.length
-    ) {
+    if (fromIndex < 0 || fromIndex >= imageList.length || toIndex < 0 || toIndex >= imageList.length) {
       return;
     }
-
-    
-    
-    
+  
+    // Check if fromIndex is the same as toIndex
+    if (fromIndex === toIndex) {
+      return;
+    }
+  
+    const startIndex = Math.min(Math.max(fromIndex, 0), imageList.length - 1);
+    const endIndex = Math.min(Math.max(toIndex, 0), imageList.length - 1);
+  
+    // Perform the image reordering
+    const draggedImage = imageList[startIndex];
     const updatedImageList = update(imageList, {
-      
       $splice: [
-        [fromIndex, 1], // Remove the item at fromIndex
-        [toIndex, 0, imageList[fromIndex]], // Insert the item at fromIndex to toIndex
+        [startIndex, 1], 
+        [endIndex, 0, draggedImage], 
       ],
-      
     });
-    console.log("updatedImageList images:", updatedImageList);
-    console.log(`updatedImageList = ${JSON.stringify(updatedImageList)}`);
-    // Update the state with the new ordered imageList
+  
     setImageList(updatedImageList);
   };
+  
 
   return (
     <div className="flex flex-wrap p-4 poppings">
@@ -72,8 +71,13 @@ const DraggableImage = ({ image, index, moveImage }) => {
     },
   });
   const springProps = useSpring({
-    transform: `translate3d(0, ${isDragging ? -10 : 0}px, 0)`, // Use translate3d for smoother vertical movement
-    config: { tension: 500, friction: 30 },
+    opacity: isDragging ? 0.7 : 1,
+    transform: `translate3d(0, ${isDragging ? -10 : 0}px, 0)`,
+    config: {
+      tension: isDragging ? 800 : 500, 
+      friction: isDragging ? 40 : 30,  
+      duration: isDragging ? 0 : 300, 
+    },
   });
 
   return (
