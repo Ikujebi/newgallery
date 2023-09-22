@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd"; // Import useDrag and useDrop
 import update from "immutability-helper";
+import { motion } from "framer-motion";
 
 const Images = ({ images }) => {
   console.log("Received images:", images);
@@ -21,6 +22,8 @@ const Images = ({ images }) => {
     ) {
       return;
     }
+
+    
     
     
     const updatedImageList = update(imageList, {
@@ -54,7 +57,7 @@ const Images = ({ images }) => {
 };
 
 const DraggableImage = ({ image, index, moveImage }) => {
-  const [, ref, preview] = useDrag({
+  const [{ isDragging }, ref, preview] = useDrag({
     type: "IMAGE",
     item: { id: image.id, index },
   });
@@ -70,12 +73,13 @@ const DraggableImage = ({ image, index, moveImage }) => {
   });
 
   return (
-    <div
+    <motion.div
+      whileDrag={{ scale: 1.1 }}
       ref={(node) => {
         ref(node);
         drop(node);
       }}
-     className=" cursor-move"
+      className={`cursor-move ${isDragging ? "dragging" : ""}`}
     >
       <img
         src={image.src}
@@ -87,7 +91,7 @@ const DraggableImage = ({ image, index, moveImage }) => {
           {image.tag}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

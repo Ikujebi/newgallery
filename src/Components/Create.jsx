@@ -1,27 +1,27 @@
 
-import {  useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import ayanfe from '../assets/images/ayanfe.png'
 import { auth } from '../firebase.js'
-import {  createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-const Create = ({setIsAuthenticated}) => {
+const Create = ({ setIsAuthenticated }) => {
 
 
   const [loading, setLoading] = useState(false);
-  
+
 
   const navigate = useNavigate();
 
-  
+
 
   const [signInInfo, setsignInInfo] = useState({
     email: '',
     password: '',
   });
- 
+
   //This state holds the error messages and allows the display of it when there issues with the form inputs
   const [errors, setErrors] = useState({
     email: '',
@@ -88,11 +88,11 @@ const Create = ({setIsAuthenticated}) => {
       setLoading(false);
     }
   };
-  
+
 
   return (
     <div className="  h-[100svh] home ">
-       <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2 flex  gap-5">
+      <div className="w-[10rem] mx-[2rem] rounded-[50%] pt-2 flex  gap-5">
         <img className=" rounded-[5rem] w-[6rem]" src={ayanfe} alt="ayanfe" />
         <h1 className=" flex font-bold text-gray-700  m-auto">DRAG n DROP</h1>
       </div>
@@ -103,7 +103,7 @@ const Create = ({setIsAuthenticated}) => {
         </div>
         <div className=" ml-[1.43rem] h-80 mt-10 ">
           <div className=" xl:w-full lg:w-full md:w-full w-[20.7rem] ">
-          <Form
+            <Form
               layout="vertical"
               onFinish={createUser}
               fields={[
@@ -120,8 +120,8 @@ const Create = ({setIsAuthenticated}) => {
               <Row>
                 <Col span={24}>
                   <Form.Item
-                  name="email"
-                  validateStatus={errors.email ? 'error' : ''}
+                    name="email"
+                    validateStatus={errors.email ? 'error' : ''}
                     help={errors.email}
                     rules={[
                       {
@@ -137,16 +137,16 @@ const Create = ({setIsAuthenticated}) => {
                       id="email"
                       placeholder="Email Address"
                       className="py-3"
-                      
+
                     />
                   </Form.Item>
                 </Col>
 
                 <Col span={24}>
                   <Form.Item
-                  name="password"
-                  validateStatus={errors.email ? 'error' : ''}
-                  help={errors.email}
+                    name="password"
+                    validateStatus={errors.password ? 'error' : ''}
+                    help={errors.password}
                     rules={[
                       {
                         required: true,
@@ -165,7 +165,7 @@ const Create = ({setIsAuthenticated}) => {
                     />
                   </Form.Item>
                 </Col>
-                
+
                 <Col span={24}>
                   <Button
                     loading={loading}
@@ -182,7 +182,7 @@ const Create = ({setIsAuthenticated}) => {
                   <h6>LogIn</h6>
                 </Link>
               </Row>
-              
+
             </Form>
           </div>
         </div>

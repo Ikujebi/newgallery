@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "source": "functions" 
+  },
   "hosting": {
     "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -8,6 +11,6 @@
         "destination": "/index.html"
       }
     ],
-    "target": "zuri-gallery-2023" 
+    "target": "zuri-gallery-2023"
   }
 }

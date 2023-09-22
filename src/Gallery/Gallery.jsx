@@ -4,11 +4,13 @@ import ImageList from "./Images";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
 import {  useNavigate } from "react-router-dom";
+import LogOutModal from "../Components/LogOutModal";
 
 const Gallery = ({ images, setIsAuthenticated }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate()
   const [filteredImages, setFilteredImages] = useState(images); // Initialize with the images prop
+  const [isLogOutModalOpen, setIsLogOutModalOpen] = useState(false);
 
   
   const handleSearchInputChange = (e) => {
@@ -35,12 +37,15 @@ const Gallery = ({ images, setIsAuthenticated }) => {
     setFilteredImages(newFilteredImages);
   };
 
+  
+  const openLogOutModal = () => {
+    setIsLogOutModalOpen(true);
+  };
   const logoutHandler = () => {
-    sessionStorage.removeItem('isAuthenticated');
-    setIsAuthenticated(false);
-    navigate("/")
+    openLogOutModal();
 
   };
+  
 
   return (
     <div className="container mx-auto mt-4 p-4 lato">
@@ -58,8 +63,19 @@ const Gallery = ({ images, setIsAuthenticated }) => {
         </Col>
         <Col>
         <Button onClick={logoutHandler} type="danger" className=" bg-red-600 text-white">sign out</Button>
+       
         </Col>
       </Row>
+      {isLogOutModalOpen && ( 
+        <LogOutModal
+          isOpen={isLogOutModalOpen}
+          onRequestClose={() => setIsLogOutModalOpen(false)}
+          onConfirm={() => {
+            handleLogout();
+            setIsLogOutModalOpen(false);
+          }}
+        />
+      )}
       <div>
         <DndProvider onDragEnd={onDragEnd} backend={TouchBackend} options={{ enableMouseEvents: true }}>
           <ImageList images={filteredImages} />

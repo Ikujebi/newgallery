@@ -23,6 +23,7 @@ import snake from "./assets/images/snake.png";
 import tiger from "./assets/images/tiger.png";
 import wolf from "./assets/images/wolf.png";
 import zebra from "./assets/images/zebra.png";
+import LogOutModal from './Components/LogOutModal';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
+      <Route path='/' element={<LogOutModal  setIsAuthenticated={setIsAuthenticated}/>} />
       <Route path='/create' element={<Create  />} />
       <Route path='/gallery' element={
           <ProtectedRoutes><Gallery setIsAuthenticated={setIsAuthenticated}  images={images}/></ProtectedRoutes>
