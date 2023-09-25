@@ -3,7 +3,8 @@ import {  useState,useEffect } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import ayanfe from '../assets/images/ayanfe.png'
-// import { getAuth } from '../firebase';
+import { auth } from '../firebase.utils';
+import { message } from 'antd';
 
 
 const Signin = ({setIsAuthenticated}) => {
@@ -49,30 +50,30 @@ const Signin = ({setIsAuthenticated}) => {
   
 
 
-  const loginHandler = () => {
+  const loginHandler = async () => {
     
     if (validateForm()) {
       setLoading(true);
-      // If the form is valid, proceed with login
-      if (signInInfo.email === 'user@example.com' && signInInfo.password === '1Password') {
+  
+      try {
+        await auth.signInWithEmailAndPassword(signInInfo.email, signInInfo.password);
+        // User successfully signed in with Firebase
         sessionStorage.setItem('isAuthenticated', 'true');
         setIsAuthenticated(true);
-        
         navigate('/gallery');
-      } else {
-        alert('Invalid username or password')
+      } catch (error) {
+        // Handle authentication error
         setError('Invalid username or password');
+        message.error("Invalid email or password. Please try again.")
+      } finally {
+        setLoading(false);
       }
     } else {
-      // If the form is not valid, do not attempt login and show validation errors
       setError('Please fill out the required fields.');
     }
   };
   
-  // When the user logs out, set isAuthenticated to false and remove it from sessionStorage
  
-  
-  // In your component's initialization code (e.g., useEffect), check sessionStorage to restore isAuthenticated
   useEffect(() => {
     const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
     setIsAuthenticated(isAuthenticated);

@@ -79,6 +79,7 @@ const Gallery = ({ images, setIsAuthenticated }) => {
       {isLogOutModalOpen && ( 
         <LogOutModal
           isOpen={isLogOutModalOpen}
+          setIsAuthenticated={setIsAuthenticated}
           onRequestClose={() => setIsLogOutModalOpen(false)}
           onConfirm={() => {
             handleLogout();

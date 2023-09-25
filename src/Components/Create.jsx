@@ -1,15 +1,14 @@
-
 import { useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import ayanfe from '../assets/images/ayanfe.png'
-import { auth } from '../firebase.js'
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import ayanfe from '../assets/images/Rectangle.png'
+import { auth, createUserProfileDocument } from '../firebase.utils';
+import { message } from 'antd';
 
 
 const Create = ({ setIsAuthenticated }) => {
 
-
+  const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
 
@@ -18,8 +17,10 @@ const Create = ({ setIsAuthenticated }) => {
 
 
   const [signInInfo, setsignInInfo] = useState({
+    displayName: '',
     email: '',
     password: '',
+    confirmPassword: ''
   });
 
   //This state holds the error messages and allows the display of it when there issues with the form inputs
@@ -58,17 +59,24 @@ const Create = ({ setIsAuthenticated }) => {
 
   const createUser = async () => {
     try {
-      const { email, password } = signInInfo;
+      const { displayName, email, password, confirmPassword  } = signInInfo;
 
       if (validateForm()) {
+        if (password !== confirmPassword) {
+          alert("Passwords don't match");
+          return;
+        }
+        
         setLoading(true);
+        const { user } = await auth.createUserWithEmailAndPassword(email, password);
+        // await createUserProfileDocument(user, { displayName });
 
-        // Create a new user with Firebase Authentication
-        await createUserWithEmailAndPassword(email, password);
-
-        // User creation successful
-        alert('User created successfully');
-        setIsAuthenticated(true); // Set authentication state
+        
+        
+        setIsSuccess(true);
+        message.success("account created successfully")
+        
+        setIsAuthenticated(true); 
         navigate('/gallery'); // Redirect to the protected route
       }
     } catch (error) {
@@ -81,9 +89,13 @@ const Create = ({ setIsAuthenticated }) => {
         setErrors({ email: 'Invalid email address.' });
       } else if (error.code === 'auth/weak-password') {
         setErrors({ password: 'Password is too weak.' });
+      } else if (error.code === 'auth/weak-password') {
+        setErrors({ email: error.message });
       } else {
         setErrors({ email: 'An error occurred while creating the user.' });
       }
+      setLoading(false);
+      
     } finally {
       setLoading(false);
     }
@@ -118,6 +130,29 @@ const Create = ({ setIsAuthenticated }) => {
               ]}
             >
               <Row>
+                <Col span={24}>
+                  <Form.Item
+                    name="displayName"
+                    validateStatus={errors.email ? 'error' : ''}
+                    
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your display Name!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      onChange={handleInputChange}
+                      name="displayName"
+                      type="text"
+                      id="displayName"
+                      placeholder="Display Name"
+                      className="py-3"
+
+                    />
+                  </Form.Item>
+                </Col>
                 <Col span={24}>
                   <Form.Item
                     name="email"
@@ -160,6 +195,29 @@ const Create = ({ setIsAuthenticated }) => {
                       placeholder="Password"
                       type="password"
                       id="password"
+                      className="py-3"
+                      required
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={24}>
+                  <Form.Item
+                    name="confirmPassword"
+                    validateStatus={errors.password ? 'error' : ''}
+                    help={errors.password}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      onChange={handleInputChange}
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      type="password"
+                      id="confirmPassword"
                       className="py-3"
                       required
                     />
